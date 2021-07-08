@@ -10,26 +10,6 @@ struct node{
         this->right=NULL;
     }
 };
-
-void levelorder(node *temp){
-    if(temp==NULL)
-    return;
-    queue<node*> q;
-    q.push(temp);
-    while(q.size()>0){
-        int count=q.size();
-        for(int i=0;i<count;i++){
-            auto t=q.front();
-            q.pop();
-        cout<<t->data<<" ";
-        if(t->left!=NULL)
-        q.push(t->left);
-        if(t->right!=NULL)
-        q.push(t->right);
-        }
-        cout<<endl;
-    }
-}
 void preinpost(node *temp){
     stack<pair<node*,int>> s;//{node,state}
     s.push({temp,1});
