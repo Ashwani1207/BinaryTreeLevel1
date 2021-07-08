@@ -1,0 +1,15 @@
+void klevelsdownnodes(node *temp,int k,node *block){
+    if(temp==NULL||k<0||temp==block)
+    return;
+    if(k==0){
+        cout<<temp->data<<endl;
+    }
+    klevelsdownnodes(temp->left,k-1,block);
+    klevelsdownnodes(temp->right,k-1,block);
+}
+void knodesfar(node *temp1,int nd,int f){
+    nodetorootpath(temp1,nd);
+    for(int i=0;i<v.size();i++){
+        klevelsdownnodes(v[i],f-i,i==0?NULL:v[i-1]);
+    }
+}
