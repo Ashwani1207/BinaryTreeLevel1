@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node{
+    int data;
+    struct node *left;
+    struct node *right;
+    node(int d){
+        this->data=d;
+        this->left=NULL;
+        this->right=NULL;
+    }
+};
+void pathtoleaffromroot(node *temp,string path,int sum,int lo,int hi){
+    if(temp==NULL)
+    return;
+    if(temp->left==NULL&&temp->right==NULL){
+        sum+=temp->data;
+        path+=to_string(temp->data);
+        cout<<path<<endl;
+    }
+    pathtoleaffromroot(temp->left,path+to_string(temp->data)+" ",sum+temp->data,lo,hi);
+    pathtoleaffromroot(temp->right,path+to_string(temp->data)+" ",sum+temp->data,lo,hi);
+}
+int main() {
+	// your code goes here
+	   struct node *root=new node(50);
+    root->left=new node(25);
+    root->right=new node(75);
+    root->left->left=new node(12);
+    root->left->right=new node(37);
+    root->left->right->left=new node(30);
+    root->right->left=new node(62);
+    root->right->right=new node(87);
+    root->right->left->right=new node(70);
+pathtoleaffromroot(root," ",0,10,90);
+    
+	return 0;
+}
+
+
+OUTPUT:
+
+ 50 25 12
+ 50 25 37 30
+ 50 75 62 70
+ 50 75 87
