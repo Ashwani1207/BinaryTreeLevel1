@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node{
+    int data;
+    struct node *left;
+    struct node *right;
+    node(int d,struct node *ll,struct node *rr){
+        this->data=d;
+        this->left=ll;
+        this->right=rr;
+    }
+};
+void preinpost(node *temp){
+    // if(temp==NULL)
+    // return;
+    stack<pair<node*,int>> s;
+    string pre="";
+    string post="";
+    string inord="";
+    s.push({temp,1});
+    
+    while(!s.empty()){
+        if(s.top().second==1){
+            auto t=s.top();
+            string tval=to_string(t.first->data)+" ";
+            pre+=tval;
+            s.top().second=s.top().second+1;
+            if(t.first->left!=NULL){
+                s.push({t.first->left,1});
+            }
+        }
+        else if(s.top().second==2){
+            auto t=s.top();
+            string tval=to_string(t.first->data)+" ";
+            inord+=tval;
+            s.top().second=s.top().second+1;
+            if(t.first->right!=NULL){
+                s.push({t.first->right,1});
+            }
+            
+        }
+        else{
+          auto t=s.top();
+            string tval=to_string(t.first->data)+" ";
+            post+=tval;
+            s.pop();
+        }
+    }
+    cout<<"PREORDER : "<<pre<<endl;
+  
+}
+node* transformtoleftclone(node *temp){
+    if(temp==NULL)
+    return NULL ;
+    auto lefttransformtoleftclone=transformtoleftclone(temp->left);
+    auto righttransformtoleftclone=transformtoleftclone(temp->right);
+    node *nn=new node(temp->data,lefttransformtoleftclone,NULL);
+    temp->left=nn;
+    temp->right=righttransformtoleftclone;
+    return temp;
+}
+int main() {
+	// your code goes here
+	struct node *root=new node(50,NULL,NULL);
+    root->left=new node(25,NULL,NULL);
+    root->right=new node(75,NULL,NULL);
+    root->left->left=new node(12,NULL,NULL);
+    preinpost(root);
+    node *clone=transformtoleftclone(root);
+    preinpost(clone);
+    return 0;
+}
+
+
+
+OUTPUT:
+
+PREORDER : 50 25 12 75 
+PREORDER : 50 50 25 25 12 12 75 75 
