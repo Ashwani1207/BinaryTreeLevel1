@@ -1,0 +1,38 @@
+POINT1 : A node should be greater tahn the max of it's left subtree and less than the values in it's right subtree
+POINT2 : IT's left subtree should be BST and right subtree should be BST
+These 2 points remains true for all nodes
+we are calculating min,max of every node Coz we don't know we can be left child or right child of our parent node 
+
+
+struct bstpair{
+    bool isbst;
+    int min_val;
+    int max_val;
+};
+bstpair* Isbst(node *temp){
+    if(temp==NULL){
+        bstpair *bres=new bstpair();
+        bres->isbst=true;
+        bres->min_val=INT_MAX;
+        bres->max_val=INT_MIN;
+        return bres;
+    }
+    bstpair* lst=Isbst(temp->left);
+    bstpair* rst=Isbst(temp->right);
+    bstpair* parentnode = new bstpair();
+    parentnode->isbst=lst->isbst&&rst->isbst&&(temp->data>=lst->max_val&&temp->data<=rst->min_val);
+    parentnode->max_val=max(temp->data,max(lst->max_val,rst->max_val));
+    parentnode->min_val=min(temp->data,min(lst->min_val,rst->min_val));
+    return parentnode;
+}
+int main() {
+	// your code goes here
+	struct node *root=new node(50,NULL,NULL);
+    root->left=new node(25,NULL,NULL);
+    root->right=new node(75,NULL,NULL);
+    root->left->left=new node(51,NULL,NULL);
+    bstpair *ans=Isbst(root);
+    cout<<ans->isbst<<endl;
+    
+    return 0;
+}
