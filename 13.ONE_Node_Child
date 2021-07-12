@@ -1,0 +1,12 @@
+void onlyonechild(node *temp){
+    if(temp==NULL)
+    return;
+    if(temp->left!=NULL&&temp->right==NULL)
+    cout<<temp->data<<endl;
+    if(temp->right!=NULL&&temp->left==NULL)
+    cout<<temp->data<<endl;
+    onlyonechild(temp->left);
+    onlyonechild(temp->right);
+    
+    
+}
